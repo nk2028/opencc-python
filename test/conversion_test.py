@@ -8,6 +8,9 @@ import sys
 import os
 import unittest
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
+from opencc import OpenCC
+
 
 class OpenCCTest(unittest.TestCase):
 
@@ -118,6 +121,4 @@ class OpenCCTest(unittest.TestCase):
         self.assertEqual(self.openCC.convert(words), '尽')
 
 if __name__ == '__main__':
-    sys.path.append(os.pardir)
-    from opencc import OpenCC
     unittest.main()

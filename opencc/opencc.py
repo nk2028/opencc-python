@@ -50,7 +50,7 @@ class OpenCC:
         # List of sentence separators from OpenCC PhraseExtract.cpp. None of these separators are allowed as
         # part of a dictionary entry
         self.split_chars_re = re.compile(
-            r'(\s+|-|,|\.|\?|!|\*|　|，|。|、|；|：|？|！|…|“|”|‘|’|『|』|「|」|﹁|﹂|—|－|（|）|《|》|〈|〉|～|．|／|＼|︒|︑|︔|︓|︿|﹀|︹|︺|︙|︐|［|﹇|］|﹈|︕|︖|︰|︳|︴|︽|︾|︵|︶|｛|︷|｝|︸|﹃|﹄|【|︻|】|︼)')
+            r'(\s+|,|\.|\?|!|\*|　|，|。|、|；|：|？|！|…|“|”|‘|’|『|』|「|」|﹁|﹂|—|－|（|）|《|》|〈|〉|～|．|／|＼|︒|︑|︔|︓|︿|﹀|︹|︺|︙|︐|［|﹇|］|﹈|︕|︖|︰|︳|︴|︽|︾|︵|︶|｛|︷|｝|︸|﹃|﹄|【|︻|】|︼)')
         if self.conversion is not None:
             self._init_dict()
 
@@ -134,7 +134,10 @@ class OpenCC:
                     min_len = 1000
                     with io.open(item, "r", encoding="utf-8") as f:
                         for line in f:
-                            key, value = line.strip().split('\t')
+                            line = line.strip()
+                            if not line or line.startswith('#'):
+                                continue
+                            key, value = line.split('\t')
                             map_dict[key] = value
                             if len(key) > max_len:
                                 max_len = len(key)
@@ -305,5 +308,3 @@ class StringTree(object):
             test_len -= 1
         # No match found
         return None, None, None, None
-
-
